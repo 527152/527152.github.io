@@ -1,5 +1,8 @@
+from django.urls import reverse
 from django.db import models
 from category.models import Category
+
+
 
 # Create your models here.
 class Product(models.Model):
@@ -14,5 +17,8 @@ class Product(models.Model):
     created_date = models.DateTimeField(auto_now_add=True) 
     modified_date = models.DateTimeField(auto_now=True) 
 
-    def __str__(self): #listar los productos por un nombre especifico
+    def get_url(self): #generando urls para los detalles de productos dentro del 'home'
+        return reverse('product_detail', args=[self.category.slug, self.slug]) #llama al product?detail pero le tiene que pasar los slug de la categoria y productos
+
+    def __str__(self): #listar los productos por un nombre especifico en admin
         return self.product_name
